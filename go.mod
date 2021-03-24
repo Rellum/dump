@@ -1,4 +1,4 @@
-module dump
+module github.com/Rellum/dump
 
 go 1.16
 
