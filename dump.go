@@ -19,5 +19,5 @@ func Fdump(w io.Writer, a ...interface{}) {
 
 func fDump(w io.Writer, skip int, a ...interface{}) {
 	_, file, line, _ := runtime.Caller(skip + 1)
-	spew.Fdump(w, append([]interface{}{"-----", fmt.Sprintf("%s:%d", file, +line)}, a...)...)
+	fmt.Fprintf(w, "------\n%s:%d\n%s", file, line, spew.Sdump(a...))
 }
