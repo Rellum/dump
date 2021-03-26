@@ -1,6 +1,7 @@
 package dump
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"runtime"
@@ -9,10 +10,14 @@ import (
 )
 
 func Dump(a ...interface{}) {
-	Fdump(os.Stdout, a...)
+	fDump(os.Stdout, 1, a...)
 }
 
 func Fdump(w io.Writer, a ...interface{}) {
-	caller, file, line, ok := runtime.Caller(1)
-	spew.Fdump(w, append([]interface{}{caller, file, line, ok}, a...)...)
+	fDump(w, 1, a...)
+}
+
+func fDump(w io.Writer, skip int, a ...interface{}) {
+	_, file, line, _ := runtime.Caller(skip + 1)
+	spew.Fdump(w, append([]interface{}{"-----", fmt.Sprintf("%s:%d", file, +line)}, a...)...)
 }
